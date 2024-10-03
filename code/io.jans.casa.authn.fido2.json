@@ -1,0 +1,461 @@
+{
+	"nodes": [
+		{
+			"data": {
+				"agamaData": {
+					"isTopLevelFlow": false,
+					"basepath": "",
+					"configParams": "{}",
+					"creationDate": "01/10/2024",
+					"nodeIcon": "material-symbols:line-start-square",
+					"timeout": "",
+					"inputs": "userData withEscape",
+					"configs": "",
+					"flowname": "io.jans.casa.authn.fido2",
+					"displayName": "FIDO authentication flow",
+					"hasComment": true,
+					"comment": "Prompts the user to present his Fido2 credential. It returns a positive value if the operation\n(assertion) was successful, or a negative value if he decided to use a different credential\nto authenticate. This flow does not terminate if the assertion fails: the user simply stays  \nat the page employed to prompt for the credential \nThe identity of the user to authenticate is provided in userData input param "
+				},
+				"id": "startNode-eb6087ba-98ce-48a5-890e-9f45001c3642",
+				"type": "startNode",
+				"position": {
+					"x": 50,
+					"y": 200
+				}
+			},
+			"type": "startNode",
+			"id": "startNode-eb6087ba-98ce-48a5-890e-9f45001c3642",
+			"position": {
+				"x": 50,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "material-symbols:code",
+					"displayName": "",
+					"hasComment": false,
+					"comment": "",
+					"javaClassName": "io.jans.casa.authn.FidoValidator",
+					"javaMethodName": "",
+					"javaVariableName": "",
+					"exceptionVariableField": "",
+					"callType": "Create an instance",
+					"arguments": [],
+					"asssignedVariableName": "jose"
+				},
+				"id": "callNode-8c5eb69f-ab4e-426b-a9f5-ce658339012d",
+				"type": "callNode",
+				"position": {
+					"x": 300,
+					"y": 200
+				},
+				"previousNodeId": "startNode-eb6087ba-98ce-48a5-890e-9f45001c3642"
+			},
+			"type": "callNode",
+			"id": "callNode-8c5eb69f-ab4e-426b-a9f5-ce658339012d",
+			"position": {
+				"x": 300,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "material-symbols:code",
+					"displayName": "",
+					"hasComment": false,
+					"comment": "",
+					"javaClassName": "",
+					"javaMethodName": "assertionRequest",
+					"javaVariableName": "jose",
+					"exceptionVariableField": "",
+					"callType": "Call method on instance",
+					"arguments": [
+						"userData.uid"
+					],
+					"asssignedVariableName": "assertion"
+				},
+				"id": "callNode-f9cb6b53-8f59-4d9d-a1e0-75d0a9688d1c",
+				"type": "callNode",
+				"position": {
+					"x": 550,
+					"y": 200
+				},
+				"previousNodeId": "callNode-8c5eb69f-ab4e-426b-a9f5-ce658339012d"
+			},
+			"type": "callNode",
+			"id": "callNode-f9cb6b53-8f59-4d9d-a1e0-75d0a9688d1c",
+			"position": {
+				"x": 550,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "material-symbols:equal",
+					"displayName": "",
+					"hasComment": false,
+					"comment": "",
+					"assignments": [
+						{
+							"variableTypeCheck": false,
+							"assignmentExpression": "{ name: userData.name, escape: withEscape, assertion: assertion }",
+							"assignedVariableName": "obj"
+						}
+					]
+				},
+				"id": "assignmentNode-aee7d859-a58c-495e-bfc4-3d97ea0e5fc5",
+				"type": "assignmentNode",
+				"position": {
+					"x": 800,
+					"y": 200
+				},
+				"previousNodeId": "callNode-f9cb6b53-8f59-4d9d-a1e0-75d0a9688d1c"
+			},
+			"type": "assignmentNode",
+			"id": "assignmentNode-aee7d859-a58c-495e-bfc4-3d97ea0e5fc5",
+			"position": {
+				"x": 800,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "ph:globe-simple",
+					"displayName": "",
+					"hasComment": false,
+					"comment": "",
+					"arguments": [
+						"obj"
+					],
+					"templatePath": "authn/fido-authn.ftlh",
+					"asssignedVariableName": "obj"
+				},
+				"id": "rrfNode-e9c927d9-c31e-4e13-9d42-6d6d5f2c416d",
+				"type": "rrfNode",
+				"position": {
+					"x": 1050,
+					"y": 200
+				},
+				"previousNodeId": "assignmentNode-aee7d859-a58c-495e-bfc4-3d97ea0e5fc5"
+			},
+			"type": "rrfNode",
+			"id": "rrfNode-e9c927d9-c31e-4e13-9d42-6d6d5f2c416d",
+			"position": {
+				"x": 1050,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": true
+		},
+		{
+			"data": {
+				"agamaData": {
+					"hasComment": false,
+					"conditions": [
+						{
+							"variable": "obj.skipped",
+							"operator": "is",
+							"dataValue": "\"\"",
+							"combinator": "none"
+						}
+					]
+				},
+				"id": "whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011",
+				"type": "whenNode",
+				"position": {
+					"x": 1300,
+					"y": 200
+				},
+				"previousNodeId": "rrfNode-e9c927d9-c31e-4e13-9d42-6d6d5f2c416d"
+			},
+			"type": "whenNode",
+			"id": "whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011",
+			"position": {
+				"x": 1300,
+				"y": 200
+			},
+			"measured": {
+				"width": 110,
+				"height": 60
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "material-symbols:code",
+					"displayName": "",
+					"hasComment": false,
+					"comment": "",
+					"javaClassName": "",
+					"javaMethodName": "verify",
+					"javaVariableName": "jose",
+					"exceptionVariableField": "",
+					"callType": "Call method on instance",
+					"arguments": [
+						"obj.tokenResponse"
+					]
+				},
+				"id": "callNode-b624e5e1-db69-4b32-b4c9-faf6e3d619fb",
+				"type": "callNode",
+				"position": {
+					"x": 1550,
+					"y": 200
+				},
+				"previousNodeId": "whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011",
+				"branching": "continue"
+			},
+			"type": "callNode",
+			"id": "callNode-b624e5e1-db69-4b32-b4c9-faf6e3d619fb",
+			"position": {
+				"x": 1550,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "material-symbols:line-end-square-rounded",
+					"hasComment": false,
+					"comment": "",
+					"returnVariable": "true",
+					"finishMode": "withVariable"
+				},
+				"id": "finishNode-322a7ed4-a4bc-4f9b-9afb-4e65ccec8a14",
+				"type": "finishNode",
+				"position": {
+					"x": 1800,
+					"y": 200
+				},
+				"previousNodeId": "callNode-b624e5e1-db69-4b32-b4c9-faf6e3d619fb"
+			},
+			"type": "finishNode",
+			"id": "finishNode-322a7ed4-a4bc-4f9b-9afb-4e65ccec8a14",
+			"position": {
+				"x": 1800,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "material-symbols:line-end-square-rounded",
+					"hasComment": false,
+					"comment": "",
+					"returnVariable": "false",
+					"finishMode": "withVariable"
+				},
+				"id": "finishNode-5e38316d-65d2-4dc4-8dc7-b14270a60d17",
+				"type": "finishNode",
+				"position": {
+					"x": 1550,
+					"y": 450
+				},
+				"previousNodeId": "whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011",
+				"branching": "success"
+			},
+			"type": "finishNode",
+			"id": "finishNode-5e38316d-65d2-4dc4-8dc7-b14270a60d17",
+			"position": {
+				"x": 1550,
+				"y": 450
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		}
+	],
+	"edges": [
+		{
+			"id": "startNode-eb6087ba-98ce-48a5-890e-9f45001c3642-callNode-8c5eb69f-ab4e-426b-a9f5-ce658339012d",
+			"type": "default",
+			"source": "startNode-eb6087ba-98ce-48a5-890e-9f45001c3642",
+			"target": "callNode-8c5eb69f-ab4e-426b-a9f5-ce658339012d",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_startNode-eb6087ba-98ce-48a5-890e-9f45001c3642"
+		},
+		{
+			"id": "callNode-8c5eb69f-ab4e-426b-a9f5-ce658339012d-callNode-f9cb6b53-8f59-4d9d-a1e0-75d0a9688d1c",
+			"type": "default",
+			"source": "callNode-8c5eb69f-ab4e-426b-a9f5-ce658339012d",
+			"target": "callNode-f9cb6b53-8f59-4d9d-a1e0-75d0a9688d1c",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_callNode-8c5eb69f-ab4e-426b-a9f5-ce658339012d"
+		},
+		{
+			"id": "callNode-f9cb6b53-8f59-4d9d-a1e0-75d0a9688d1c-assignmentNode-aee7d859-a58c-495e-bfc4-3d97ea0e5fc5",
+			"type": "default",
+			"source": "callNode-f9cb6b53-8f59-4d9d-a1e0-75d0a9688d1c",
+			"target": "assignmentNode-aee7d859-a58c-495e-bfc4-3d97ea0e5fc5",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_callNode-f9cb6b53-8f59-4d9d-a1e0-75d0a9688d1c"
+		},
+		{
+			"id": "assignmentNode-aee7d859-a58c-495e-bfc4-3d97ea0e5fc5-rrfNode-e9c927d9-c31e-4e13-9d42-6d6d5f2c416d",
+			"type": "default",
+			"source": "assignmentNode-aee7d859-a58c-495e-bfc4-3d97ea0e5fc5",
+			"target": "rrfNode-e9c927d9-c31e-4e13-9d42-6d6d5f2c416d",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_assignmentNode-aee7d859-a58c-495e-bfc4-3d97ea0e5fc5"
+		},
+		{
+			"id": "rrfNode-e9c927d9-c31e-4e13-9d42-6d6d5f2c416d-whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011",
+			"type": "default",
+			"source": "rrfNode-e9c927d9-c31e-4e13-9d42-6d6d5f2c416d",
+			"target": "whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_rrfNode-e9c927d9-c31e-4e13-9d42-6d6d5f2c416d"
+		},
+		{
+			"id": "whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011-callNode-b624e5e1-db69-4b32-b4c9-faf6e3d619fb",
+			"type": "default",
+			"source": "whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011",
+			"target": "callNode-b624e5e1-db69-4b32-b4c9-faf6e3d619fb",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "continue",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011_continue"
+		},
+		{
+			"id": "callNode-b624e5e1-db69-4b32-b4c9-faf6e3d619fb-finishNode-322a7ed4-a4bc-4f9b-9afb-4e65ccec8a14",
+			"type": "default",
+			"source": "callNode-b624e5e1-db69-4b32-b4c9-faf6e3d619fb",
+			"target": "finishNode-322a7ed4-a4bc-4f9b-9afb-4e65ccec8a14",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_callNode-b624e5e1-db69-4b32-b4c9-faf6e3d619fb"
+		},
+		{
+			"id": "whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011-finishNode-5e38316d-65d2-4dc4-8dc7-b14270a60d17",
+			"type": "default",
+			"source": "whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011",
+			"target": "finishNode-5e38316d-65d2-4dc4-8dc7-b14270a60d17",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "Condition met",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_whenNode-8b82692f-6270-4c0b-bd5f-a7fcd9f95011_success"
+		}
+	],
+	"viewport": {
+		"x": -14.989588720055167,
+		"y": 91.50428052979424,
+		"zoom": 0.7536674547791904
+	}
+}

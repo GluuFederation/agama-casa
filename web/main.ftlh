@@ -1,38 +1,25 @@
-<#import "commons.ftlh" as com>
-<@com.main>
+[#ftl output_format="HTML"]
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body>&lt;#import "commons.ftlh" as com&gt;
+&lt;@com.main&gt;
 
-    <#assign assets=cache.casa_assets grabLocation=(captureLocation!false)>
+    &lt;#assign assets=cache.casa_assets grabLocation=(captureLocation!false)&gt;
 
-    <section class="pa4 shadow-4 bg-blank gray cust-section">
-        <h2 class="f3 dark-blue2">${msgs['casa.login.panel_title']}</h2>
+    <section class="pa4 shadow-4 bg-blank gray cust-section"><h2 class="f3 dark-blue2">SSO Test</h2>
         
-        <#if message??>
-            <p class="w5 dark-red tc pv2 ph0 ma0 f6">${message}</p>
-        </#if>
-        
-        <form name="login" method="post" enctype="application/x-www-form-urlencoded" class="pt2">
-            <div class="relative w5 mt4 pb2">
-                <input name="username" value="${username!}" type="text" class="focused-text w-100 pb1 dark-gray" required>
-                <label class="focused-label-big">${msgs['login.username']}</label>
-            </div>
-            <div class="relative w5 mt4 pb1">
-                <input name="password" type="password" class="focused-text w-100 pb1 dark-gray" required>
-                <label class="focused-label-big">${msgs['login.password']}</label>
-            </div>
-            <div class="mt5">
-                <input type="submit" value="${msgs['login.login']}"
-                    class="f7-cust bw0 br1 ph4 pv2 bg-bsgreen-success white hover-bsgreen-success hover-white btn cust-primary-button">
-            </div>
+        &lt;#if message??&gt;
+            <p class="w5 dark-red tc pv2 ph0 ma0 f6">${message}</p><!--#if--><form method="post" name="login" enctype="application/x-www-form-urlencoded" class="pt2"><div class="relative w5 mt4 pb2"><input type="text" name="username" value="${username!}" required="" class="focused-text w-100 pb1 dark-gray"><label class="focused-label-big">${msgs['login.username']}</label></div><div class="relative w5 mt4 pb1"><input type="password" name="password" required="" class="focused-text w-100 pb1 dark-gray"><label class="focused-label-big">${msgs['login.password']}</label></div><div class="mt5"><input type="submit" value="${msgs['login.login']}" class="f7-cust bw0 br1 ph4 pv2 bg-bsgreen-success white hover-bsgreen-success hover-white btn cust-primary-button"></div><input type="hidden" name="device">
+            &lt;#if grabLocation&gt;
+                <input type="hidden" name="location"><!--#if--></form></section>
 
-            <input name="device" type="hidden">
-            <#if grabLocation>
-                <input name="location" type="hidden">
-            </#if>
-        </form>
-    </section>
+    &lt;#-- "preload" font awesome used later in selector.ftlh --&gt;
+    
 
-    <script src="${assets.contextPath}/scripts/ua-parser.pack-2.0.0.js"></script>
-    <script>
+<!--@com.main--></body>
+
+<script src="${assets.contextPath}/scripts/ua-parser.pack-2.0.0.js"></script><script>
         function attachHeaders(xhr, headers) {
             for (var i = 0; i < headers.length; i++) {
                 xhr.setRequestHeader(headers[i].name, headers[i].value)
@@ -123,9 +110,5 @@
             fillPlatformData(f.device)
 
         }
-    </script>
-
-    <#-- "preload" font awesome used later in selector.ftlh -->
-    <script src="${assets.contextPath}/scripts/font-awesome-5.12.1.all.min.js" defer></script>
-
-</@com.main>
+    </script><script src="${assets.contextPath}/scripts/font-awesome-5.12.1.all.min.js" defer=""></script>
+</html>
